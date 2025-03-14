@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Turno</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #gameContainer {
+            text-align: center;
+        }
+        .enemy {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            background-color: red;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <h1>Jogo de Turno</h1>
+        <div id="player">⚔️ Jogador - HP: <span id="playerHP">100</span></div>
+        <br>
+        <div id="enemies">
+            <div class="enemy" data-index="0">👹 Inimigo 1 - HP: <span class="enemyHP">50</span></div>
+            <div class="enemy" data-index="1">👹 Inimigo 2 - HP: <span class="enemyHP">50</span></div>
+            <div class="enemy" data-index="2">👹 Inimigo 3 - HP: <span class="enemyHP">50</span></div>
+        </div>
+        <br>
+        <button onclick="selectAction('attack')">Atacar</button>
+        <button onclick="selectAction('defend')">Defender</button>
+        <button onclick="selectAction('magic')">Soltar Magia</button>
+    </div>
+
+    <script>
+        let playerHP = 100;
+        let enemies = [50, 50, 50];
+        let defending = false;
+
+        function selectAction(action) {
+            if (action === 'defend') {
+                defending = true;
+                alert("Você está defendendo este turno!");
+                enemyTurn();
+                return;
+            }
+            
+            let enemyIndex = prompt("Escolha um inimigo (1, 2 ou 3)") - 1;
+            if (enemyIndex < 0 || enemyIndex > 2 || isNaN(enemyIndex)) {
+                alert("Inimigo inválido!");
+                return;
+            }
+            
+            let damage = action === 'attack' ? 10 : 15;
+            enemies[enemyIndex] -= damage;
+            alert(`Você usou ${action === 'attack' ? 'Ataque' : 'Magia'} e causou ${damage} de dano no Inimigo ${enemyIndex + 1}!`);
+            
+            updateDisplay();
+            if (enemies.every(hp => hp <= 0)) {
+                alert("Você venceu!");
+                return;
+            }
+            
+            enemyTurn();
+        }
+
+        function enemyTurn() {
+            if (!defending) {
+                let damage = Math.floor(Math.random() * 10) + 5;
+                playerHP -= damage;
+                alert(`Os inimigos atacaram! Você recebeu ${damage} de dano.`);
+            } else {
+                alert("Você bloqueou o ataque inimigo!");
+                defending = false;
+            }
+            
+            updateDisplay();
+            if (playerHP <= 0) {
+                alert("Você foi derrotado!");
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById("playerHP").innerText = playerHP;
+            document.querySelectorAll(".enemyHP").forEach((el, index) => {
+                el.innerText = enemies[index] > 0 ? enemies[index] : "Derrotado";
+            });
+        }
+    </script>
+</body>
+</html>
