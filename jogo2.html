@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Fantasy</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #gameContainer {
+            text-align: center;
+        }
+        .Personagem-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .Personagem {
+            text-align: center;
+            margin: 10px;
+        }
+        .Personagem img {
+            width: 100px;
+            height: 100px;
+        }
+        .health-bar, .mana-bar {
+            width: 100px;
+            height: 10px;
+            margin-top: 5px;
+            border: 1px solid white;
+        }
+        .health {
+            height: 100%;
+            background-color: red;
+            width: 100%;
+        }
+        .mana {
+            height: 100%;
+            background-color: blue;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('Dungeon.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+    </style>    
+    <div id="gameContainer">
+        <h1></h1>
+        <div class="Personagem-container">
+            <div class="Personagem">
+                <img src="PlayerC.png" alt="Jogador">
+                <div class="health-bar">
+                    <div class="health" id="playerHealth"></div>
+                </div>
+                <span>HP: <span id="playerHP">100</span></span>
+                <div class="mana-bar">
+                    <div class="mana" id="playerMana"></div>
+                </div>
+                <span>Mana: <span id="playerManaText">100</span></span>
+            </div>
+        </div>
+        <div class="Personagem-container">
+            <div class="Personagem" data-index="0">
+                <img src="Monster1.png" alt="Inimigo 1">
+                <div class="health-bar">
+                    <div class="health" id="enemyHealth0"></div>
+                </div>
+                <span>HP: <span class="enemyHP">50</span></span>
+            </div>
+            <div class="Personagem" data-index="1">
+                <img src="Monster2.png" alt="Inimigo 2">
+                <div class="health-bar">
+                    <div class="health" id="enemyHealth1"></div>
+                </div>
+                <span>HP: <span class="enemyHP">50</span></span>
+            </div>
+            <div class="Personagem" data-index="2">
+                <img src="Monster3.png" alt="Inimigo 3">
+                <div class="health-bar">
+                    <div class="health" id="enemyHealth2"></div>
+                </div>
+                <span>HP: <span class="enemyHP">50</span></span>
+            </div>
+        </div>
+        <button onclick="selectAction('attack')">Atacar</button>
+        <button onclick="selectAction('defend')">Defender</button>
+        <button onclick="selectAction('magic')">Magia</button>
+    </div>
+
+    <script>
+        let playerHP = 100;
+        let playerMana = 75;
+        const maxMana = 0;
+        let enemies = [50, 50, 50];
+        let defending = false;
+
+        function selectAction(action) {
+            if (action === 'defend') {
+                defending = true;
+                alert("Você está defendendo este turno!");
+                enemyTurn();
+                return;
+            }
+
+            let enemyIndex = prompt("Escolha um inimigo (1, 2 ou 3)") - 1;
+            if (enemyIndex < 0 || enemyIndex > 2 || isNaN(enemyIndex)) {
+                alert("Inimigo inválido!");
+                return;
+            }
+
+            if (action === 'magic' && playerMana < 25) {
+                alert("Mana insuficiente!");
+                return;
+            }
+
+            let damage = action === 'attack' ? 10 : 15;
+            enemies[enemyIndex] -= damage;
+
+            if (action === 'magic') {
+                playerMana -= 25;
+                alert(`Você usou Magia e causou ${damage} de dano no Inimigo ${enemyIndex + 1}!`);
+            } else {
+                alert(`Você usou Ataque e causou ${damage} de dano no Inimigo ${enemyIndex + 1}!`);
+            }
+
+            updateDisplay();
+            if (enemies.every(hp => hp <= 0)) {
+                alert("Você venceu!");
+                return;
+            }
+
+            enemyTurn();
+        }
+
+        function enemyTurn() {
+            if (!defending) {
+                let damage = Math.floor(Math.random() * 10) + 5;
+                playerHP -= damage;
+                alert(`Os inimigos atacaram! Você recebeu ${damage} de dano.`);
+            } else {
+                alert("Você bloqueou o ataque inimigo!");
+                defending = false;
+            }
+
+            updateDisplay();
+            if (playerHP <= 0) {
+                alert("Você foi derrotado!");
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById("playerHP").innerText = playerHP;
+            document.getElementById("playerHealth").style.width = playerHP + "px";
+            document.getElementById("playerManaText").innerText = playerMana;
+            document.getElementById("playerMana").style.width = (playerMana / maxMana) * 100 + "%";
+
+            document.querySelectorAll(".enemyHP").forEach((el, index) => {
+                el.innerText = enemies[index] > 0 ? enemies[index] : "Derrotado";
+                document.getElementById("enemyHealth" + index).style.width = Math.max(enemies[index], 0) + "px";
+            });
+        }
+
+        function regenerarMana() {
+            if (playerMana < maxMana) {
+                playerMana += 5;
+                if (playerMana > maxMana) playerMana = maxMana;
+                updateDisplay();
+            }
+        }
+
+        setInterval(regenerarMana, 1000);
+
+        updateDisplay();
+    </script>
+</body>
+</html>
+
