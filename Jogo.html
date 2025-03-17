@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Jogo de Turno</title>
@@ -10,38 +11,43 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('fundo.jpg'); /* Imagem de fundo */
+            background-image: url('fundo.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 1);
             text-align: center;
             flex-direction: column;
         }
 
         h1 {
             font-size: 36px;
-            margin-bottom: 20px;
+            margin-bottom: 80px;
+            margin-top: -100px;
         }
 
         button {
-            font-size: 20px;
-            padding: 10px 20px;
-            background-color: #ffcc00;
+            font-size: 28px;
+            padding: 20px 50px;
+            background-color: #FF0000;
             border: none;
             cursor: pointer;
-            border-radius: 10px;
+            font-family: 'Press Start 2P', cursive;
+            border-radius: 15px;
+            margin-bottom: 50px;
         }
 
         button:hover {
-            background-color: #ffaa00;
+            background-color: #FF3333;
         }
 
         p {
             margin-top: 10px;
             font-size: 18px;
             max-width: 400px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -49,15 +55,18 @@
     <style>
         body{
             background-image: url('Dungeon.jpg');
+            line-height: 1.8
         }
     </style>
-    <h1>Jogo de Turno</h1>
+    <h1>First Fantasy</h1>
     <button onclick="startGame()">Jogar</button>
-    <p>Enfrente 3 inimigos em um combate estratégico por turnos!</p>
+    <p>Enfrente 3 inimigos em um combate estratégico por turnos!
+        Você terá 3 opção de ação, sendo elas atacar, infrigindo dano no inimigo, defender, reduzindo o dano recebido e Magia, onde também se infringe dano no inimigo mas gasta mana, fazendo que se tornde um recurso limitado.
+    </p>
 
     <script>
         function startGame() {
-            window.location.href = "Jogo2.html"; // Redireciona para a tela do jogo
+            window.location.href = "Jogo2.html";
         }
     </script>
 </body>

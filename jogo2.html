@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First Fantasy</title>
@@ -62,6 +63,7 @@
             background-position: center;
             background-repeat: no-repeat;
             color: white;
+            font-family: 'Press Start 2P', cursive;
             font-family: Arial, sans-serif;
             text-align: center;
         }
@@ -87,21 +89,21 @@
                 <div class="health-bar">
                     <div class="health" id="enemyHealth0"></div>
                 </div>
-                <span>HP: <span class="enemyHP">50</span></span>
+                <span>HP: <span class="enemyHP">60</span></span>
             </div>
             <div class="Personagem" data-index="1">
                 <img src="Monster2.png" alt="Inimigo 2">
                 <div class="health-bar">
                     <div class="health" id="enemyHealth1"></div>
                 </div>
-                <span>HP: <span class="enemyHP">50</span></span>
+                <span>HP: <span class="enemyHP">80</span></span>
             </div>
             <div class="Personagem" data-index="2">
                 <img src="Monster3.png" alt="Inimigo 3">
                 <div class="health-bar">
                     <div class="health" id="enemyHealth2"></div>
                 </div>
-                <span>HP: <span class="enemyHP">50</span></span>
+                <span>HP: <span class="enemyHP">40</span></span>
             </div>
         </div>
         <button onclick="selectAction('attack')">Atacar</button>
@@ -113,7 +115,7 @@
         let playerHP = 100;
         let playerMana = 75;
         const maxMana = 0;
-        let enemies = [50, 50, 50];
+        let enemies = [60, 80, 40];
         let defending = false;
 
         function selectAction(action) {
