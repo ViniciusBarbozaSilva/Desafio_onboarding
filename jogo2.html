@@ -96,7 +96,7 @@
                 <div class="health-bar">
                     <div class="health" id="enemyHealth1"></div>
                 </div>
-                <span>HP: <span class="enemyHP">80</span></span>
+                <span>HP: <span class="enemyHP">70</span></span>
             </div>
             <div class="Personagem" data-index="2">
                 <img src="Monster3.png" alt="Inimigo 3">
@@ -115,7 +115,7 @@
         let playerHP = 100;
         let playerMana = 75;
         const maxMana = 0;
-        let enemies = [60, 80, 40];
+        let enemies = [60, 70, 40];
         let defending = false;
 
         function selectAction(action) {
@@ -137,7 +137,7 @@
                 return;
             }
 
-            let damage = action === 'attack' ? 10 : 15;
+            let damage = action === 'attack' ? 20 : 35;
             enemies[enemyIndex] -= damage;
 
             if (action === 'magic') {
@@ -169,6 +169,7 @@
             updateDisplay();
             if (playerHP <= 0) {
                 alert("Você foi derrotado!");
+                window.location.href = "Jogo.html";
             }
         }
 
@@ -198,4 +199,3 @@
     </script>
 </body>
 </html>
-
